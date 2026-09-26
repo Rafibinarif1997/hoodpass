@@ -29,3 +29,13 @@ WL requires a narrow, high-corner shot with >=86% power, while beating a moving 
 
 ## V7 full upgrade
 Full-screen 2.5D penalty presentation with visible kicker, run-up, kick animation, moving keeper, dive direction, trajectory, power/precision HUD, camera shake, goal flash, generated audio, and mobile pointer controls. WL requires a high-power, high-corner, keeper-beating shot.
+
+
+## V9 — Football-game penalty controls
+The penalty engine uses a canvas scene and a single pointer system for desktop + mobile.
+- Flick/swipe direction controls shot placement.
+- Flick distance controls power.
+- Player run-up and kick sequence precede ball flight.
+- Moving goalkeeper reacts after the shot.
+- Goal qualification requires high corner placement, strong power, and beating the keeper.
+- This is inspired by football-game penalty mechanics but uses original browser-rendered visuals; it does not copy proprietary PES/eFootball assets.
