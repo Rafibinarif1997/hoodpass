@@ -38,3 +38,9 @@ body{overflow-x:hidden}.progame{max-width:1120px}.game-top{display:flex;justify-
 /* V8: Canvas penalty engine */
 .realgame{max-width:1160px}.canvas-wrap{position:relative;width:100%;margin-top:18px;border:1px solid #2c3b52;background:#02070d;box-shadow:0 30px 80px #0008;overflow:hidden}.canvas-wrap canvas{display:block;width:100%;height:clamp(460px,64vw,700px);touch-action:none;cursor:crosshair}.touch-help{position:absolute;left:50%;bottom:42px;transform:translateX(-50%);padding:9px 13px;background:#02060ccc;border:1px solid #ffffff20;color:#fff;font:9px "Press Start 2P";letter-spacing:.5px;pointer-events:none;text-align:center;white-space:nowrap}.camera-label{position:absolute;left:14px;top:14px;color:#ffffff70;font:9px "Press Start 2P";pointer-events:none}.realgame .message{min-height:44px}.realgame .shoot{background:#101827;color:#fff;border:1px solid #35e7ff66}.realgame .shoot:hover{background:#16253a}.realgame .powerbar{margin-top:14px}.realgame .powerbar i{background:linear-gradient(90deg,#35e7ff,#73ff8c,#ff4fd8)}
 @media(max-width:700px){.realgame{padding-left:3%;padding-right:3%}.canvas-wrap canvas{height:clamp(460px,125vw,590px)}.touch-help{font-size:7px;bottom:28px;white-space:normal;width:90%}.camera-label{font-size:7px}.realgame .gameintro{font-size:12px;line-height:1.7}.realgame .shotstats{font-size:8px}}
+/* V9 football-game penalty controls */
+.realgame .canvas-wrap{border-radius:10px;user-select:none;-webkit-user-select:none}
+.realgame canvas{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.realgame .touch-help{transition:opacity .2s ease}
+.realgame .shoot{margin-top:4px;min-width:150px}
+@media(max-width:700px){.realgame .canvas-wrap{margin-left:-2px;margin-right:-2px}.realgame .shoot{width:100%;padding:15px}.realgame .powerbar{grid-template-columns:52px 1fr 42px}.realgame h1{font-size:27px}}
