@@ -21,3 +21,11 @@ The API should only issue WL after a server-verified game result and should atom
 
 ## V4 presentation
 2.5D stadium perspective, lighting, generated WebAudio kick/shot/save/goal/crowd sounds. No external audio assets required.
+
+
+## Hard mode
+WL requires a narrow, high-corner shot with >=86% power, while beating a moving goalkeeper. Shots that merely enter the goal are not sufficient.
+
+
+## V7 full upgrade
+Full-screen 2.5D penalty presentation with visible kicker, run-up, kick animation, moving keeper, dive direction, trajectory, power/precision HUD, camera shake, goal flash, generated audio, and mobile pointer controls. WL requires a high-power, high-corner, keeper-beating shot.
