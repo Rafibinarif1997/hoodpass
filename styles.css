@@ -14,52 +14,27 @@ html,body{width:100%;min-height:100%;overflow-x:hidden}.mobileTop{display:none}.
 }
 @media(max-width:380px){.stats{grid-template-columns:1fr}.actions .btn{width:100%;flex-basis:100%}.odds .rewardlist{grid-template-columns:repeat(2,1fr)}.rankrow{grid-template-columns:32px minmax(0,1fr) 82px}.walletBtn{font-size:11px}}
 
-/* MOBILE MENU — overflow fix only */
-@media (max-width: 850px){
-  .sidebar{
-    width:min(300px, 84vw) !important;
-    max-width:84vw !important;
-    overflow-x:hidden !important;
-    box-sizing:border-box !important;
-  }
-
+/* ONLY: mobile drawer nav overflow fix */
+@media(max-width:850px){
   .sidebar nav{
+    display:grid !important;
     width:100% !important;
     min-width:0 !important;
     max-width:100% !important;
     overflow-x:hidden !important;
-    display:grid !important;
-    gap:6px !important;
   }
-
   .sidebar .nav{
+    display:flex !important;
     width:100% !important;
     min-width:0 !important;
     max-width:100% !important;
     box-sizing:border-box !important;
     overflow:hidden !important;
-    white-space:nowrap !important;
   }
-
   .sidebar .nav span{
     flex:0 0 20px !important;
   }
-
-  .sideBrand{
-    width:100% !important;
-    min-width:0 !important;
-    max-width:100% !important;
-    box-sizing:border-box !important;
-  }
-
-  .sideBrand .brand{
-    min-width:0 !important;
-    overflow:hidden !important;
-  }
-
-  .sideBrand .brand span{
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
+  .sidebar .nav:not(.active){
     white-space:nowrap !important;
   }
 }
