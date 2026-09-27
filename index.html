@@ -1,47 +1,238 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PIXEL FORGE — Free NFT Factory</title><style>
 :root{--bg:#080d1b;--panel:#111b30;--line:#2c4164;--cyan:#65f4e6;--pink:#ff79b6;--text:#eaf5ff;--muted:#9db0c9}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 5%,#203453 0,transparent 33%),var(--bg);font:15px system-ui,sans-serif;color:var(--text)}.wrap{max-width:1200px;margin:auto;padding:20px}.nav{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid var(--line);padding-bottom:16px}.brand{font-size:23px;font-weight:900;letter-spacing:1px}.brand b{color:var(--cyan)}.tag{font-size:12px;color:var(--cyan);border:1px solid #35685f;border-radius:30px;padding:8px 12px}.hero{padding:38px 0 24px}.hero h1{font-size:clamp(34px,6vw,66px);line-height:1.03;margin:0}.hero h1 span{color:var(--cyan)}.hero p{color:var(--muted);max-width:700px;line-height:1.7}.layout{display:grid;grid-template-columns:350px 1fr;gap:20px}.panel{background:#111b30e8;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 12px 35px #0004}.panel h2{font-size:19px;margin:0 0 20px}.field{margin:18px 0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:9px}input,select{background:#091426;color:white;border:1px solid #385074;border-radius:9px;width:100%;padding:13px;font:inherit}input:focus,select:focus{outline:2px solid var(--cyan)}.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.choice{border:1px solid #3c5274;background:#15243c;color:white;padding:12px 5px;border-radius:9px;cursor:pointer}.choice.active{border-color:var(--cyan);background:#1c4b51;color:var(--cyan)}button{font:inherit;cursor:pointer}.primary{background:var(--cyan);color:#05252a;border:0;border-radius:9px;padding:14px;font-weight:900;width:100%}.primary:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#253b59;color:white;border:1px solid #456387;border-radius:9px;padding:12px}.actions{display:flex;gap:10px;flex-wrap:wrap}.actions>*{flex:1}.stats{display:flex;gap:15px;flex-wrap:wrap;margin:20px 0}.stat{flex:1;min-width:110px;background:#0b1529;border:1px solid var(--line);border-radius:12px;padding:14px}.stat strong{display:block;font-size:25px;color:var(--cyan)}.stat small{color:var(--muted)}.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}.nft{background:#0c172b;border:1px solid #30466b;border-radius:12px;overflow:hidden}.nft canvas{display:block;width:100%;image-rendering:pixelated}.nft p{margin:10px;color:var(--muted);font-size:12px}.empty{padding:60px 15px;text-align:center;border:1px dashed #486084;border-radius:15px;color:var(--muted)}.empty .emoji{font-size:60px}.hint{color:var(--muted);font-size:12px;line-height:1.6}.progress{height:8px;background:#263953;border-radius:10px;overflow:hidden;margin:15px 0}.bar{background:var(--cyan);height:100%;width:0%;transition:width .1s}.status{min-height:22px;color:var(--cyan);font-size:13px}footer{padding:35px 0;color:#7892b1;font-size:12px;text-align:center}@media(max-width:800px){.layout{grid-template-columns:1fr}.wrap{padding:15px}.hero{padding:30px 0 10px}.panel{padding:16px}}
 </style></head><body><div class="wrap"><header class="nav"><div class="brand">◈ PIXEL <b>FORGE</b></div><div class="tag">100% FREE · NO UPLOAD · NO WALLET</div></header><section class="hero"><h1>CREATE <span>500 UNIQUE</span><br>PIXEL NFTs.</h1><p>Pick a character. Generate your collection. Download PNG artwork and NFT metadata in one ZIP. Everything runs locally in your browser.</p></section><main class="layout"><section class="panel"><h2>⚙️ COLLECTION BUILDER</h2><div class="field"><label>COLLECTION NAME</label><input id="name" maxlength="60" value="My Pixel Collection"></div><div class="field"><label>CHOOSE CHARACTER</label><div class="buttons" id="characters"><button class="choice active" data-char="bear">🐻 BEAR</button><button class="choice" data-char="cat">🐱 CAT</button><button class="choice" data-char="monkey">🐵 MONKEY</button><button class="choice" data-char="robot">🤖 ROBOT</button></div></div><div class="field"><label>THEME</label><select id="theme"><option value="classic">Classic Pixel</option><option value="cyber">Cyberpunk Neon</option><option value="royal">Royal Gold</option><option value="space">Space Explorer</option></select></div><div class="field"><label>QUANTITY</label><select id="quantity"><option>10</option><option>50</option><option>100</option><option selected>500</option><option>1000</option></select></div><div class="field"><label>ARTWORK SIZE</label><select id="resolution"><option value="256">256 × 256 PNG</option><option value="512" selected>512 × 512 PNG</option></select></div><button id="generate" class="primary">⚡ GENERATE COLLECTION</button><div class="progress"><div class="bar" id="bar"></div></div><div id="status" class="status" aria-live="polite">Ready to forge.</div><p class="hint">No AI API required. Unique trait combinations are checked before generation. Generated art is procedural, not AI-painted. Creating 1,000 PNGs can take time on older phones.</p></section><section class="panel"><h2>🖼️ YOUR COLLECTION</h2><div class="stats"><div class="stat"><strong id="total">0</strong><small>Generated</small></div><div class="stat"><strong id="unique">0</strong><small>Unique combinations</small></div><div class="stat"><strong id="type">BEAR</strong><small>Character</small></div></div><div class="actions" style="margin-bottom:18px"><button class="secondary" id="shuffle">↻ NEW PREVIEW</button><button class="primary" id="download" disabled>↓ DOWNLOAD ZIP</button></div><div id="gallery" class="empty"><div class="emoji">🎨</div><h3>Your NFTs appear here</h3><p>Choose settings and press Generate Collection.</p></div><p class="hint">Preview shows the first 24 NFTs. Your downloaded ZIP contains the entire collection and one metadata JSON per NFT. Metadata image paths are local placeholders; upload images to your chosen storage before minting.</p></section></main><footer>PIXEL FORGE · Browser-based procedural NFT studio · No minting or earnings promised</footer></div><script>
+
 'use strict';
-const $=id=>document.getElementById(id);let character='bear',collection=[],busy=false;
-const COLORS={classic:['#8fd4d7','#f5cba7','#ba8bce','#a9d489','#ffd581','#d79baf','#93a8d7'],cyber:['#08e6df','#a250ff','#ff4d9d','#61ff9c','#ffe763','#64a6ff'],royal:['#d6ad43','#a85c42','#9364b0','#f6d78a','#578e87','#d88397'],space:['#72c9ef','#b395ff','#ec83c1','#b6d77a','#dfba78','#8ea2d9']};
-const BG=['#28364e','#35475a','#443b65','#2b5357','#65425d','#4e543a','#1c3152','#554d68','#24515e','#5d3850'];
-const EYES=['normal','happy','sleepy','angry','laser','glasses','wink','star'];const HATS=['none','cap','crown','beanie','antenna','halo','headphones','top hat'];const CLOTHES=['hoodie','jacket','suit','armor','jersey','scarf','overalls','cape'];const MOUTHS=['smile','open','straight','fang','grin','tiny'];const ACCESS=['none','chain','bow','badge','tie','gem'];
+const $=id=>document.getElementById(id);
+let character='bear',collection=[],busy=false;
+
+const COLORS={
+ classic:['#8fd4d7','#f5cba7','#ba8bce','#a9d489','#ffd581','#d79baf','#93a8d7','#e48b6a','#7fc7a8'],
+ cyber:['#08e6df','#a250ff','#ff4d9d','#61ff9c','#ffe763','#64a6ff','#ff713b','#8d7aff'],
+ royal:['#d6ad43','#a85c42','#9364b0','#f6d78a','#578e87','#d88397','#6b7fd7','#d26f9a'],
+ space:['#72c9ef','#b395ff','#ec83c1','#b6d77a','#dfba78','#8ea2d9','#8ff0dc','#ff9d71']
+};
+const BG=['#18243b','#28364e','#35475a','#443b65','#2b5357','#65425d','#4e543a','#1c3152','#554d68','#24515e','#382b4e','#253d52'];
+const EYES=['normal','happy','sleepy','angry','laser','glasses','wink','star','visor','heart'];
+const HATS=['none','cap','crown','beanie','antenna','halo','headphones','top hat','horns','bandana','helmet'];
+const CLOTHES=['hoodie','jacket','suit','armor','jersey','scarf','overalls','cape','tux','space suit','bomber'];
+const MOUTHS=['smile','open','straight','fang','grin','tiny','tongue','beak'];
+const ACCESS=['none','chain','bow','badge','tie','gem','backpack','sword','flower','radio'];
+const POSES=['center','left','right','tall','wide','leanL','leanR','jump','tiny','hero'];
+const BODY=['round','square','slim','chunky','long','short'];
+const PATTERNS=['none','spots','stripes','stars','check','split','pixels','rings','diamonds'];
+
 function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function rng(seed){let x=seed>>>0;return()=>{x+=0x6d2b79f5;let t=x;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296}}
 function pick(r,n){return Math.floor(r()*n)}
-function trait(seed,theme){let r=rng(seed);return{bg:pick(r,BG.length),fur:pick(r,COLORS[theme].length),eye:pick(r,EYES.length),hat:pick(r,HATS.length),clothes:pick(r,CLOTHES.length),mouth:pick(r,MOUTHS.length),access:pick(r,ACCESS.length),pattern:pick(r,7),accent:pick(r,6)}}
+function trait(seed,theme){
+  let r=rng(seed);
+  return {
+    bg:pick(r,BG.length), fur:pick(r,COLORS[theme].length), eye:pick(r,EYES.length),
+    hat:pick(r,HATS.length), clothes:pick(r,CLOTHES.length), mouth:pick(r,MOUTHS.length),
+    access:pick(r,ACCESS.length), pose:pick(r,POSES.length), body:pick(r,BODY.length),
+    pattern:pick(r,PATTERNS.length), accent:pick(r,7), bgpattern:pick(r,6)
+  };
+}
 function key(t){return Object.values(t).join('-')}
 function rect(c,x,y,w,h,col){c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))}
-function draw(canvas,t,ch,theme){const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;const S=64;canvas.width=64;canvas.height=64;const pal=COLORS[theme],fur=pal[t.fur],dark='#202239',light='#fff1da',accent=pal[(t.fur+t.accent+1)%pal.length],bg=BG[t.bg];rect(c,0,0,64,64,bg);
-// background geometry
-for(let i=0;i<9;i++){let x=(i*23+t.pattern*11)%64,y=(i*19+t.bg*7)%58;rect(c,x,y,3+(t.pattern%3),3,accent+'88')};rect(c,0,54,64,10,'#101b30');rect(c,8,56,48,3,accent);
-// torso
-rect(c,14,39,36,17,dark);rect(c,17,40,30,16,['#5073a0','#985e90','#5d957d','#b48b56','#805eab','#a26a61','#456e87','#7472a0'][t.clothes]);rect(c,17,42,30,3,accent);if(t.clothes===0){rect(c,26,43,12,12,dark);rect(c,29,44,6,6,accent)}if(t.clothes===1){rect(c,30,42,4,13,light);rect(c,22,46,3,8,accent)}if(t.clothes===2){rect(c,30,41,4,14,light);rect(c,31,44,2,9,accent)}if(t.clothes===3){rect(c,21,44,22,10,'#8091a6');rect(c,28,45,8,7,accent)}if(t.clothes===4){rect(c,22,46,20,3,light);rect(c,29,42,6,10,accent)}if(t.clothes===5){rect(c,18,39,28,5,accent);rect(c,29,43,5,11,accent)}if(t.clothes===6){rect(c,21,43,22,13,'#9a7960');rect(c,26,43,3,12,accent);rect(c,35,43,3,12,accent)}if(t.clothes===7){rect(c,12,39,5,16,accent);rect(c,47,39,5,16,accent)}
-// ears and head
-if(ch==='bear'){rect(c,12,11,13,13,dark);rect(c,39,11,13,13,dark);rect(c,15,14,7,7,fur);rect(c,42,14,7,7,fur)}else if(ch==='cat'){rect(c,12,8,12,18,dark);rect(c,40,8,12,18,dark);rect(c,16,13,5,10,fur);rect(c,43,13,5,10,fur)}else if(ch==='monkey'){rect(c,9,24,10,13,dark);rect(c,45,24,10,13,dark);rect(c,11,27,7,7,fur);rect(c,46,27,7,7,fur)}else{rect(c,11,17,8,12,accent);rect(c,45,17,8,12,accent);rect(c,30,8,4,9,dark);rect(c,31,6,2,3,accent)}
-rect(c,17,17,30,27,dark);rect(c,19,19,26,23,fur);rect(c,16,24,4,14,fur);rect(c,44,24,4,14,fur);if(ch==='monkey'){rect(c,21,28,22,13,'#e8bba0')}if(ch==='robot'){rect(c,20,20,24,22,'#9ca8ba');rect(c,21,21,22,4,accent)}if(t.pattern%3===0){rect(c,20,25,3,4,accent);rect(c,41,25,3,4,accent)}if(t.pattern%3===1){rect(c,29,20,6,2,accent)}
-// eyes
-const ey=29;if(t.eye===0||t.eye===3||t.eye===4||t.eye===7){rect(c,23,ey,5,5,t.eye===4?'#ff4279':dark);rect(c,36,ey,5,5,t.eye===4?'#ff4279':dark);if(t.eye===7){rect(c,24,ey-2,3,9,light);rect(c,37,ey-2,3,9,light)}if(t.eye===3){rect(c,22,27,7,2,dark);rect(c,35,27,7,2,dark)}}else if(t.eye===1||t.eye===2){rect(c,22,31,7,2,dark);rect(c,35,31,7,2,dark);if(t.eye===1){rect(c,24,29,3,2,dark);rect(c,37,29,3,2,dark)}}else if(t.eye===5){rect(c,20,27,11,8,dark);rect(c,33,27,11,8,dark);rect(c,29,29,6,2,dark);rect(c,22,29,7,3,accent);rect(c,35,29,7,3,accent)}else{rect(c,22,30,7,2,dark);rect(c,36,29,5,5,dark)}
-// mouth
-if(ch==='bear'||ch==='cat'){rect(c,30,35,4,3,'#f2c4b2')}if(t.mouth===0){rect(c,28,39,8,2,dark);rect(c,30,41,4,1,dark)}if(t.mouth===1){rect(c,29,38,7,5,dark);rect(c,31,41,3,2,'#e9829b')}if(t.mouth===2){rect(c,28,40,8,2,dark)}if(t.mouth===3){rect(c,28,39,8,3,dark);rect(c,30,40,2,3,light)}if(t.mouth===4){rect(c,27,38,10,4,dark);rect(c,29,39,6,2,light)}if(t.mouth===5){rect(c,31,39,3,2,dark)}
-// hats
-if(t.hat===1){rect(c,15,14,34,7,accent);rect(c,12,20,40,3,dark);rect(c,17,13,29,3,dark)}if(t.hat===2){rect(c,19,11,26,9,'#d8ae45');rect(c,19,8,5,5,'#fbe388');rect(c,30,5,4,9,'#fbe388');rect(c,40,8,5,5,'#fbe388');rect(c,18,18,28,3,'#fbe388')}if(t.hat===3){rect(c,17,11,30,12,accent);rect(c,15,20,34,5,dark);rect(c,18,22,28,3,accent)}if(t.hat===4){rect(c,29,7,6,13,accent);rect(c,27,4,10,5,light)}if(t.hat===5){rect(c,16,8,32,4,'#f7dc79');rect(c,20,6,24,2,'#f7dc79')}if(t.hat===6){rect(c,12,21,6,17,dark);rect(c,46,21,6,17,dark);rect(c,14,18,36,3,accent);rect(c,12,25,6,9,accent);rect(c,46,25,6,9,accent)}if(t.hat===7){rect(c,20,5,24,16,dark);rect(c,22,7,20,11,accent);rect(c,15,19,34,4,dark)}
-// accessories
-if(t.access===1){rect(c,26,45,12,2,'#f8d47d');rect(c,30,47,4,5,'#f8d47d')}if(t.access===2){rect(c,28,43,8,5,accent);rect(c,30,45,4,3,light)}if(t.access===3){rect(c,35,48,6,6,'#f6d68b');rect(c,37,49,2,4,accent)}if(t.access===4){rect(c,29,43,6,11,accent);rect(c,30,48,4,5,dark)}if(t.access===5){rect(c,29,45,6,7,'#6ce8d8');rect(c,31,46,2,4,light)}
-return canvas}
+function poly(c,pts,col){c.fillStyle=col;c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)c.lineTo(pts[i][0],pts[i][1]);c.closePath();c.fill()}
+function draw(canvas,t,ch,theme){
+  const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false; canvas.width=64; canvas.height=64;
+  const pal=COLORS[theme],fur=pal[t.fur],dark='#202239',light='#fff1da',accent=pal[(t.fur+t.accent+1)%pal.length],bg=BG[t.bg];
+  rect(c,0,0,64,64,bg);
+
+  // visually distinct backgrounds
+  if(t.bgpattern===0){for(let x=0;x<64;x+=8)rect(c,x,0,1,54,'#ffffff12')}
+  if(t.bgpattern===1){for(let y=0;y<54;y+=8)rect(c,0,y,64,1,'#ffffff12')}
+  if(t.bgpattern===2){for(let i=0;i<10;i++)rect(c,(i*17+t.pattern*5)%64,(i*13+t.bg*3)%52,3,3,accent)}
+  if(t.bgpattern===3){for(let i=0;i<5;i++)poly(c,[[i*16,54],[i*16+8,38],[i*16+16,54]],'#ffffff10')}
+  if(t.bgpattern===4){rect(c,6,8,52,40,'#00000010');rect(c,10,12,44,32,'#ffffff08')}
+  if(t.bgpattern===5){for(let i=0;i<8;i++){let x=(i*21+t.bg*4)%64;rect(c,x,8+(i*7)%40,5,5,accent+'55')}}
+
+  // ground/platform
+  rect(c,0,54,64,10,'#101827');
+  rect(c,6,57,52,2,accent);
+  if(t.pose===7) rect(c,18,52,28,2,accent+'88');
+
+  // pose transforms
+  let cx=32, cy=0, sx=1, sy=1;
+  if(t.pose===1) cx=27;
+  if(t.pose===2) cx=37;
+  if(t.pose===3) sy=0.88;
+  if(t.pose===4) sx=1.18;
+  if(t.pose===5) {cx=29;cy=2;}
+  if(t.pose===6) {cx=35;cy=2;}
+  if(t.pose===7) cy=-5;
+  if(t.pose===8) {sx=.86;sy=.86;cy=5;}
+  if(t.pose===9) cy=-1;
+
+  const bx=10*sx, bw=44*sx, torsoY=37+cy, torsoH=19*sy;
+  const headW=(t.body===0?32:t.body===1?34:t.body===2?27:t.body===3?38:t.body===4?29:35)*sx;
+  const headH=(t.body===4?25:t.body===5?20:27)*sy;
+  const hx=cx-headW/2, hy=15+cy;
+
+  // legs/body silhouette
+  rect(c,bx,torsoY,bw,torsoH,dark);
+  if(t.pose===5){rect(c,bx+2,torsoY+5,9,15,dark);rect(c,bx+35*sx,torsoY-3,9,15,dark)}
+  if(t.pose===6){rect(c,bx+2,torsoY-3,9,15,dark);rect(c,bx+35*sx,torsoY+5,9,15,dark)}
+  let cloth=['#5073a0','#985e90','#5d957d','#b48b56','#805eab','#a26a61','#456e87','#7472a0','#8c5964','#4c7890','#69704f'][t.clothes];
+  rect(c,bx+3,torsoY+1,bw-6,torsoH-1,cloth);
+  rect(c,bx+4,torsoY+2,bw-8,3,accent);
+
+  // clothing silhouettes
+  if(t.clothes===0){rect(c,cx-6,torsoY+5,12,12,dark);rect(c,cx-3,torsoY+6,6,6,accent)}
+  if(t.clothes===1){rect(c,cx-2,torsoY+2,4,torsoH-2,light);rect(c,cx-12,torsoY+8,4,8,accent)}
+  if(t.clothes===2){rect(c,cx-2,torsoY+2,4,torsoH-2,light);rect(c,cx-1,torsoY+8,2,8,accent)}
+  if(t.clothes===3){rect(c,cx-12,torsoY+5,24,12,'#8796aa');rect(c,cx-4,torsoY+6,8,7,accent)}
+  if(t.clothes===4){rect(c,cx-10,torsoY+7,20,3,light);rect(c,cx-3,torsoY+3,6,12,accent)}
+  if(t.clothes===5){rect(c,bx+3,torsoY, bw-6,5,accent);rect(c,cx-2,torsoY+5,4,torsoH-5,accent)}
+  if(t.clothes===6){rect(c,cx-11,torsoY+4,22,14,'#9a7960');rect(c,cx-6,torsoY+4,3,13,accent);rect(c,cx+3,torsoY+4,3,13,accent)}
+  if(t.clothes===7){rect(c,bx-2,torsoY+1,5,17,accent);rect(c,bx+bw-3,torsoY+1,5,17,accent)}
+  if(t.clothes===8){rect(c,cx-13,torsoY+4,26,14,'#252b3c');rect(c,cx-2,torsoY+4,4,14,light)}
+  if(t.clothes===9){rect(c,cx-12,torsoY+4,24,13,'#8798ad');rect(c,cx-8,torsoY+7,16,5,accent)}
+  if(t.clothes===10){rect(c,bx+2,torsoY+2,bw-4,7,'#3b4f68');rect(c,cx-5,torsoY+6,10,10,accent)}
+
+  // ears/head silhouette
+  const earY=hy+1;
+  if(ch==='bear'){
+    rect(c,hx+1,earY,12,13,dark);rect(c,hx+headW-13,earY,12,13,dark);
+    rect(c,hx+4,earY+3,7,7,fur);rect(c,hx+headW-11,earY+3,7,7,fur);
+  } else if(ch==='cat'){
+    poly(c,[[hx+1,hy+14],[hx+4,hy-2],[hx+14,hy+10]],dark);
+    poly(c,[[hx+headW-1,hy+14],[hx+headW-4,hy-2],[hx+headW-14,hy+10]],dark);
+    poly(c,[[hx+5,hy+10],[hx+6,hy+3],[hx+11,hy+9]],fur);
+    poly(c,[[hx+headW-5,hy+10],[hx+headW-6,hy+3],[hx+headW-11,hy+9]],fur);
+  } else if(ch==='monkey'){
+    rect(c,hx-5,hy+8,11,14,dark);rect(c,hx+headW-6,hy+8,11,14,dark);
+    rect(c,hx-2,hy+11,7,8,fur);rect(c,hx+headW-5,hy+11,7,8,fur);
+  } else {
+    rect(c,hx-4,hy+7,9,13,accent);rect(c,hx+headW-5,hy+7,9,13,accent);
+    rect(c,cx-3,hy-5,6,10,dark);rect(c,cx-2,hy-7,4,3,accent);
+  }
+
+  // head
+  rect(c,hx,hy,headW,headH,dark);
+  rect(c,hx+3,hy+3,headW-6,headH-6,fur);
+  if(ch==='monkey')rect(c,hx+7,hy+10,headW-14,headH-9,'#e8bba0');
+  if(ch==='robot'){rect(c,hx+3,hy+3,headW-6,headH-6,'#9ca8ba');rect(c,hx+4,hy+4,headW-8,4,accent)}
+
+  // face pattern, intentionally prominent
+  if(t.pattern===1){rect(c,hx+6,hy+7,5,5,accent);rect(c,hx+headW-11,hy+7,5,5,accent);rect(c,cx-2,hy+15,4,4,accent)}
+  if(t.pattern===2){rect(c,hx+4,hy+8,headW-8,3,accent);rect(c,hx+7,hy+16,headW-14,3,accent)}
+  if(t.pattern===3){for(let i=0;i<4;i++)rect(c,hx+6+i*7,hy+7+(i%2)*7,3,3,accent)}
+  if(t.pattern===4){rect(c,hx+4,hy+4,headW/2-4,headH-8,accent);rect(c,cx+2,hy+4,headW/2-6,headH-8,fur)}
+  if(t.pattern===5){rect(c,hx+5,hy+6,4,4,accent);rect(c,hx+headW-9,hy+6,4,4,accent);rect(c,cx-2,hy+18,4,4,accent)}
+  if(t.pattern===6){for(let i=0;i<7;i++)rect(c,hx+5+(i*5)%22,hy+5+(i*7)%14,2,2,accent)}
+  if(t.pattern===7){rect(c,cx-10,hy+4,20,2,accent);rect(c,cx-6,hy+8,12,2,accent);rect(c,cx-2,hy+12,4,2,accent)}
+
+  // eyes
+  const ey=hy+Math.round(headH*.46);
+  const ex=Math.round(headW*.22), ew=Math.max(4,Math.round(headW*.15));
+  if(t.eye===0||t.eye===3||t.eye===4||t.eye===7||t.eye===9){
+    rect(c,hx+ex,ey,ew,5,t.eye===4?'#ff4279':dark);rect(c,hx+headW-ex-ew,ey,ew,5,t.eye===4?'#ff4279':dark);
+    if(t.eye===7){rect(c,hx+ex+1,ey-2,2,9,light);rect(c,hx+headW-ex-ew+1,ey-2,2,9,light)}
+    if(t.eye===3){rect(c,hx+ex-1,ey-2,ew+2,2,dark);rect(c,hx+headW-ex-ew-1,ey-2,ew+2,2,dark)}
+    if(t.eye===9){rect(c,hx+ex+1,ey+1,2,2,'#ff5f8f');rect(c,hx+headW-ex-ew+1,ey+1,2,2,'#ff5f8f')}
+  } else if(t.eye===1||t.eye===2){
+    rect(c,hx+ex-1,ey+2,ew+2,2,dark);rect(c,hx+headW-ex-ew-1,ey+2,ew+2,2,dark);
+    if(t.eye===1){rect(c,hx+ex+1,ey,2,2,dark);rect(c,hx+headW-ex-ew+1,ey,2,2,dark)}
+  } else if(t.eye===5){
+    rect(c,hx+ex-3,ey-2,ew+6,8,dark);rect(c,hx+headW-ex-ew-3,ey-2,ew+6,8,dark);
+    rect(c,hx+ex,ey,ew,3,accent);rect(c,hx+headW-ex-ew,ey,ew,3,accent)
+  } else if(t.eye===8){
+    rect(c,hx+ex-2,ey-1,ew+4,7,accent);rect(c,hx+headW-ex-ew-2,ey-1,ew+4,7,accent);rect(c,cx-2,ey+1,4,2,dark)
+  }
+
+  // mouth
+  const my=hy+Math.round(headH*.70);
+  if(t.mouth===0){rect(c,cx-5,my,10,2,dark);rect(c,cx-2,my+2,4,1,dark)}
+  if(t.mouth===1){rect(c,cx-4,my-1,8,6,dark);rect(c,cx-2,my+3,4,2,'#e9829b')}
+  if(t.mouth===2)rect(c,cx-5,my+1,10,2,dark)
+  if(t.mouth===3){rect(c,cx-5,my,10,3,dark);rect(c,cx-3,my+1,2,4,light);rect(c,cx+1,my+1,2,4,light)}
+  if(t.mouth===4){rect(c,cx-6,my-1,12,5,dark);rect(c,cx-3,my,6,2,light)}
+  if(t.mouth===5)rect(c,cx-2,my,4,2,dark)
+  if(t.mouth===6){rect(c,cx-4,my,8,3,dark);rect(c,cx-1,my+3,2,3,'#f27b9d')}
+  if(t.mouth===7)poly(c,[[cx-4,my],[cx+4,my],[cx,my+5]],dark)
+
+  // hats/headwear
+  if(t.hat===1){rect(c,hx+2,hy+1,headW-4,7,accent);rect(c,hx-3,hy+8,headW+6,3,dark)}
+  if(t.hat===2){rect(c,hx+3,hy-2,headW-6,8,'#d8ae45');rect(c,cx-2,hy-8,4,8,'#fbe388');rect(c,hx+4,hy+5,headW-8,3,'#fbe388')}
+  if(t.hat===3){rect(c,hx+3,hy-4,headW-6,12,accent);rect(c,hx+1,hy+5,headW-2,5,dark)}
+  if(t.hat===4){rect(c,cx-3,hy-7,6,14,accent);rect(c,cx-5,hy-10,10,4,light)}
+  if(t.hat===5){rect(c,hx+1,hy-8,headW-2,4,'#f7dc79');rect(c,hx+6,hy-10,headW-12,2,'#f7dc79')}
+  if(t.hat===6){rect(c,hx-5,hy+6,5,17,dark);rect(c,hx+headW,hy+6,5,17,dark);rect(c,hx-2,hy+3,headW+4,4,accent)}
+  if(t.hat===7){rect(c,hx+5,hy-9,headW-10,15,dark);rect(c,hx+7,hy-7,headW-14,10,accent);rect(c,hx-2,hy+4,headW+4,4,dark)}
+  if(t.hat===8){poly(c,[[hx+5,hy+3],[hx+2,hy-7],[hx+10,hy+1]],accent);poly(c,[[hx+headW-5,hy+3],[hx+headW-2,hy-7],[hx+headW-10,hy+1]],accent)}
+  if(t.hat===9){rect(c,hx-1,hy+3,headW+2,5,accent);rect(c,hx+5,hy+7,headW-10,3,dark)}
+  if(t.hat===10){rect(c,hx+3,hy-4,headW-6,10,dark);rect(c,hx+6,hy-2,headW-12,7,accent);rect(c,hx-2,hy+4,headW+4,4,dark)}
+
+  // accessories
+  if(t.access===1){rect(c,cx-7,torsoY+8,14,2,'#f8d47d');rect(c,cx-2,torsoY+10,4,5,'#f8d47d')}
+  if(t.access===2){rect(c,cx-4,torsoY+5,8,5,accent);rect(c,cx-2,torsoY+7,4,3,light)}
+  if(t.access===3){rect(c,cx+7,torsoY+10,6,6,'#f6d68b');rect(c,cx+9,torsoY+11,2,4,accent)}
+  if(t.access===4){rect(c,cx-3,torsoY+5,6,11,accent);rect(c,cx-2,torsoY+10,4,5,dark)}
+  if(t.access===5){rect(c,cx-3,torsoY+7,6,7,'#6ce8d8');rect(c,cx-1,torsoY+8,2,4,light)}
+  if(t.access===6){rect(c,bx-1,torsoY+5,7,12,'#303b52');rect(c,bx+2,torsoY+7,3,8,accent)}
+  if(t.access===7){rect(c,bx-7,torsoY+2,4,17,dark);rect(c,bx-9,torsoY+1,8,3,light)}
+  if(t.access===8){rect(c,cx+12,torsoY+6,5,5,'#ff8aa8');rect(c,cx+13,torsoY+4,3,9,'#ff8aa8')}
+  if(t.access===9){rect(c,bx+bw-1,torsoY+5,6,13,'#29384b');rect(c,bx+bw+1,torsoY+7,3,7,accent)}
+
+  // small highlight pixels make silhouettes richer
+  rect(c,hx+5,hy+5,2,2,light+'99');
+  return canvas;
+}
 function makePreview(t,ch,theme){let cv=document.createElement('canvas');draw(cv,t,ch,theme);return cv}
 function yieldUI(){return new Promise(r=>setTimeout(r,0))}
 $('characters').onclick=e=>{const b=e.target.closest('[data-char]');if(!b||busy)return;character=b.dataset.char;document.querySelectorAll('.choice').forEach(x=>x.classList.toggle('active',x===b));$('type').textContent=character.toUpperCase()};
 function updateProgress(p,msg){$('bar').style.width=p+'%';$('status').textContent=msg}
-function render(){let g=$('gallery');g.className='gallery';g.innerHTML='';collection.slice(0,24).forEach((n,i)=>{let d=document.createElement('div');d.className='nft';d.appendChild(makePreview(n.traits,n.character,n.theme));let p=document.createElement('p');p.textContent='#'+String(i+1).padStart(3,'0');d.appendChild(p);g.appendChild(d)});$('total').textContent=collection.length;$('unique').textContent=new Set(collection.map(n=>key(n.traits))).size;$('download').disabled=!collection.length}
-async function generate(){if(busy)return;busy=true;$('generate').disabled=true;$('download').disabled=true;collection=[];$('gallery').className='empty';$('gallery').textContent='Generating unique designs…';$('total').textContent='0';$('unique').textContent='0';let count=Number($('quantity').value),theme=$('theme').value,ch=character,name=$('name').value.trim()||'Pixel Collection',used=new Set(),seed=(Date.now()^Math.floor(Math.random()*0xffffffff))>>>0;try{for(let i=0;i<count;i++){let t,k,tries=0;do{t=trait(hash(seed+':'+i+':'+tries),theme);k=key(t);tries++}while(used.has(k)&&tries<10000);if(used.has(k))throw Error('Not enough unique combinations');used.add(k);collection.push({traits:t,character:ch,theme,name});if(i%100===0){updateProgress(Math.round(i/count*100),'Creating combinations '+i+'/'+count);await yieldUI()}}render();updateProgress(100,count+' unique NFTs ready. Download your ZIP!')}catch(e){updateProgress(0,e.message)}finally{busy=false;$('generate').disabled=false}}
+function render(){
+  let g=$('gallery');g.className='gallery';g.innerHTML='';
+  collection.slice(0,24).forEach((n,i)=>{let d=document.createElement('div');d.className='nft';d.appendChild(makePreview(n.traits,n.character,n.theme));let p=document.createElement('p');p.textContent='#'+String(i+1).padStart(3,'0')+' · '+EYES[n.traits.eye]+' · '+HATS[n.traits.hat];d.appendChild(p);g.appendChild(d)});
+  $('total').textContent=collection.length;$('unique').textContent=new Set(collection.map(n=>key(n.traits))).size;$('download').disabled=!collection.length
+}
+async function generate(){
+  if(busy)return;busy=true;$('generate').disabled=true;$('download').disabled=true;collection=[];$('gallery').className='empty';$('gallery').textContent='Generating visually different designs…';$('total').textContent='0';$('unique').textContent='0';
+  let count=Number($('quantity').value),theme=$('theme').value,ch=character,name=$('name').value.trim()||'Pixel Collection',used=new Set(),seed=(Date.now()^Math.floor(Math.random()*0xffffffff))>>>0;
+  try{
+    for(let i=0;i<count;i++){
+      let t,k,tries=0;
+      do{t=trait(hash(seed+':'+i+':'+tries),theme);k=key(t);tries++}while(used.has(k)&&tries<10000);
+      if(used.has(k))throw Error('Not enough unique combinations');used.add(k);
+      collection.push({traits:t,character:ch,theme,name});
+      if(i%50===0){updateProgress(Math.round(i/count*100),'Creating '+i+'/'+count+' visually different NFTs');await yieldUI()}
+    }
+    render();updateProgress(100,count+' unique NFTs ready. The first 24 are shown above.');
+  }catch(e){updateProgress(0,e.message)}
+  finally{busy=false;$('generate').disabled=false}
+}
 $('generate').onclick=generate;$('shuffle').onclick=()=>{if(busy)return;generate()};
-// Zero-dependency ZIP writer (stored entries) with CRC32, works offline.
+
+// ZIP export
 const crcTable=(()=>{let a=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;a[n]=c>>>0}return a})();
 function crc32(bytes){let c=0xffffffff;for(let i=0;i<bytes.length;i++)c=crcTable[(c^bytes[i])&255]^(c>>>8);return(c^0xffffffff)>>>0}
 const enc=new TextEncoder();function u16(n){return[n&255,n>>>8&255]}function u32(n){return[n&255,n>>>8&255,n>>>16&255,n>>>24&255]}
 class Zip{constructor(){this.parts=[];this.central=[];this.offset=0;this.count=0}add(name,data){let nm=enc.encode(name),crc=crc32(data),size=data.length,head=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0x800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(size),...u32(size),...u16(nm.length),...u16(0)]);this.parts.push(head,nm,data);let cen=new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0x800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(size),...u32(size),...u16(nm.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(this.offset)]);this.central.push(cen,nm);this.offset+=head.length+nm.length+size;this.count++}finish(){let size=this.central.reduce((n,x)=>n+x.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(this.count),...u16(this.count),...u32(size),...u32(this.offset),...u16(0)]);return new Blob([...this.parts,...this.central,end],{type:'application/zip'})}}
-function blobBytes(blob){return blob.arrayBuffer().then(b=>new Uint8Array(b))}function canvasPNG(cv,size){let out=document.createElement('canvas');out.width=size;out.height=size;let c=out.getContext('2d');c.imageSmoothingEnabled=false;c.drawImage(cv,0,0,size,size);return new Promise((res,rej)=>out.toBlob(b=>b?res(b):rej(Error('PNG encoding failed')),'image/png'))}
+function blobBytes(blob){return blob.arrayBuffer().then(b=>new Uint8Array(b))}
+function canvasPNG(cv,size){let out=document.createElement('canvas');out.width=size;out.height=size;let c=out.getContext('2d');c.imageSmoothingEnabled=false;c.drawImage(cv,0,0,size,size);return new Promise((res,rej)=>out.toBlob(b=>b?res(b):rej(Error('PNG encoding failed')),'image/png'))}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'collection'}
-$('download').onclick=async()=>{if(busy||!collection.length)return;busy=true;$('download').disabled=true;$('generate').disabled=true;let z=new Zip(),size=Number($('resolution').value);try{for(let i=0;i<collection.length;i++){let n=collection[i],num=String(i+1).padStart(4,'0'),file=num+'.png',cv=makePreview(n.traits,n.character,n.theme),png=await canvasPNG(cv,size);z.add('images/'+file,await blobBytes(png));let attributes=Object.entries(n.traits).map(([k,v])=>({trait_type:k,value:({eye:EYES,hat:HATS,clothes:CLOTHES,mouth:MOUTHS,access:ACCESS}[k]||[])[v]??String(v)}));attributes.push({trait_type:'Character',value:n.character},{trait_type:'Theme',value:n.theme});let metadata={name:n.name+' #'+(i+1),description:'Procedurally generated pixel artwork from '+n.name,image:'images/'+file,attributes};z.add('metadata/'+num+'.json',enc.encode(JSON.stringify(metadata,null,2)));if(i%10===0){updateProgress(Math.round((i+1)/collection.length*100),'Exporting PNGs and metadata '+(i+1)+'/'+collection.length);await yieldUI()}}z.add('README.txt',enc.encode('PIXEL FORGE EXPORT\n\nImages and metadata are local. Before minting, upload images to permanent storage (e.g. IPFS) and replace each metadata image field with its public URI. Then upload metadata. No on-chain minting is performed by this tool.\n'));let url=URL.createObjectURL(z.finish()),a=document.createElement('a');a.href=url;a.download=slug(collection[0].name)+'-'+collection.length+'-nfts.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);updateProgress(100,'ZIP downloaded: '+collection.length+' PNGs + metadata.')}catch(e){updateProgress(0,'Export failed: '+e.message)}finally{busy=false;$('download').disabled=false;$('generate').disabled=false}};
+$('download').onclick=async()=>{
+  if(busy||!collection.length)return;busy=true;$('download').disabled=true;$('generate').disabled=true;
+  let z=new Zip(),size=Number($('resolution').value);
+  try{
+    for(let i=0;i<collection.length;i++){
+      let n=collection[i],num=String(i+1).padStart(4,'0'),file=num+'.png',cv=makePreview(n.traits,n.character,n.theme),png=await canvasPNG(cv,size);
+      z.add('images/'+file,await blobBytes(png));
+      let attributes=Object.entries(n.traits).map(([k,v])=>({trait_type:k,value:({eye:EYES,hat:HATS,clothes:CLOTHES,mouth:MOUTHS,access:ACCESS,pose:POSES,body:BODY,pattern:PATTERNS}[k]||[])[v]??String(v)}));
+      attributes.push({trait_type:'Character',value:n.character},{trait_type:'Theme',value:n.theme});
+      z.add('metadata/'+num+'.json',enc.encode(JSON.stringify({name:n.name+' #'+(i+1),description:'Procedurally generated pixel artwork from '+n.name,image:'images/'+file,attributes},null,2)));
+      if(i%10===0){updateProgress(Math.round((i+1)/collection.length*100),'Exporting '+(i+1)+'/'+collection.length+' PNGs + metadata');await yieldUI()}
+    }
+    z.add('README.txt',enc.encode('PIXEL FORGE EXPORT\n\nProcedural pixel collection. Before minting, upload images to permanent storage such as IPFS and replace metadata image fields with public URIs. No on-chain minting is performed by this tool.\n'));
+    let url=URL.createObjectURL(z.finish()),a=document.createElement('a');a.href=url;a.download=slug(collection[0].name)+'-'+collection.length+'-nfts.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);
+    updateProgress(100,'ZIP downloaded: '+collection.length+' PNGs + metadata.');
+  }catch(e){updateProgress(0,'Export failed: '+e.message)}
+  finally{busy=false;$('download').disabled=false;$('generate').disabled=false}
+};
+
 </script></body></html>
