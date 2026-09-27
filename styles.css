@@ -13,28 +13,3 @@ html,body{width:100%;min-height:100%;overflow-x:hidden}.mobileTop{display:none}.
   section{width:100%;min-width:0}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{min-width:0;padding:15px}.stat strong{font-size:23px}.stat span{font-size:9px}.two,.spinpage,.profilegrid{grid-template-columns:minmax(0,1fr);gap:12px}.card{padding:16px;border-radius:12px;min-width:0}.hero{min-height:430px;padding:25px 20px;display:block}.hero>div{width:100%}.hero img{width:120%;height:62%;top:auto;bottom:0;right:-10%;object-fit:cover;opacity:.23}.hero h2{font-size:34px;max-width:300px}.hero p{font-size:13px;max-width:450px}.actions{flex-wrap:wrap}.actions .btn{flex:1;min-width:130px;text-align:center}.chatwrap{width:100%;padding:10px}.chatlog{height:calc(100dvh - 285px);min-height:300px;padding:4px}.bubble{max-width:90%}.composer{position:sticky;bottom:8px;background:#0a0e1b;padding-top:10px}.composer input{min-width:0}.wheel{width:min(72vw,270px);height:min(72vw,270px)}.wheelcore{inset:19vw}.odds .rewardlist{grid-template-columns:repeat(3,1fr)}.rewardlist span{padding:11px 7px;font-size:12px}.mission{gap:12px;align-items:center}.mission>div{min-width:0}.mission h3{font-size:15px}.mission p{font-size:11px}.mission .btn{flex:none;padding:9px 10px;font-size:11px}.refbox{flex-direction:column}.refbox input{width:100%;min-width:0}.refstats{grid-template-columns:repeat(3,1fr)}.refstats div{padding:12px 8px}.refstats b{font-size:18px}.refstats small{font-size:9px}.rankrow{grid-template-columns:38px minmax(0,1fr) 95px;gap:6px;font-size:12px}.rankrow strong{font-size:11px}.profileicon{width:70px;height:70px}.danger{margin-bottom:20px}
 }
 @media(max-width:380px){.stats{grid-template-columns:1fr}.actions .btn{width:100%;flex-basis:100%}.odds .rewardlist{grid-template-columns:repeat(2,1fr)}.rankrow{grid-template-columns:32px minmax(0,1fr) 82px}.walletBtn{font-size:11px}}
-
-/* ONLY: mobile drawer nav overflow fix */
-@media(max-width:850px){
-  .sidebar nav{
-    display:grid !important;
-    width:100% !important;
-    min-width:0 !important;
-    max-width:100% !important;
-    overflow-x:hidden !important;
-  }
-  .sidebar .nav{
-    display:flex !important;
-    width:100% !important;
-    min-width:0 !important;
-    max-width:100% !important;
-    box-sizing:border-box !important;
-    overflow:hidden !important;
-  }
-  .sidebar .nav span{
-    flex:0 0 20px !important;
-  }
-  .sidebar .nav:not(.active){
-    white-space:nowrap !important;
-  }
-}
