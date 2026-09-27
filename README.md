@@ -1,19 +1,26 @@
-# MAVNARO Beta
+# MAVNARO Beta V2
 
-Free beta prototype of the MAVNARO NFT-gated social reward platform.
+Static, mobile-first MAVNARO beta. No npm/build required.
 
-## Run
+## What is real in this build
+- Responsive mobile navigation and full-width layout.
+- EVM wallet connection through `window.ethereum` (MetaMask, Coinbase Wallet browser, etc.).
+- Wallet/account and chain changes are detected live.
+- Daily spin reset is date-based.
+- Chat, missions, referral link, XP, balance and history persist locally.
+- Referral links are generated and copyable.
 
-No npm/build step required. Upload the whole folder to GitHub Pages or any static host.
+## What is intentionally NOT claimed as production-real yet
+- Beta points are not blockchain tokens and have no monetary value.
+- Chat replies are local beta logic, not a hosted AI model.
+- Leaderboard is not a shared server leaderboard.
+- Rewards are not minted/transferred on-chain.
+- NFT gating is intentionally absent from the beta app.
 
-## Included
-- Dashboard
-- Chat & Earn
-- Spin
-- Missions
-- Referral
-- Leaderboard
-- Profile
-- LocalStorage-based demo economy
+Those four production functions require a backend and/or smart contracts. Do not put private API keys in this static GitHub Pages site.
 
-The beta intentionally has no NFT gate. A future `/verify/` page can be added without rebuilding the core app.
+## Later NFT gate
+Create a separate `/verify` page that checks the connected wallet's NFT ownership against the final NFT contract, then redirects verified holders to the app. Keep the app itself unchanged.
+
+## Optional configuration
+Edit `config.js` for the final EVM chain, Supabase URL/anon key, and Reown/WalletConnect project ID when those services are created.
