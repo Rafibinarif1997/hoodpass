@@ -1,31 +1,131 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Games — Trump Chaos</title><link rel="stylesheet" href="style.css"></head><body>
 <nav class="nav"><div class="container navin"><a class="brand" href="index.html">TRUMP <b>CHAOS</b></a><button class="menu" type="button">MENU</button><div class="links"><a href="index.html">HOME</a><a class="active" href="games.html">GAMES</a><a href="meme.html">MEME LAB</a><a href="about.html">ABOUT</a></div></div></nav>
-<main class="container gamewrap"><div class="gamehead"><h1>PLAY THE <span style="color:var(--gold)">CHAOS</span></h1><p>Four tiny games. Infinite nonsense. Tap-friendly on mobile.</p></div>
+
+<main class="container gamewrap">
+<div class="gamehead"><span class="eyebrow">PLAY → EARN XP → LEVEL UP</span><h1>TRUMP <span style="color:var(--gold)">CHAOS</span></h1><p>Every game gives XP. Build your level, chase high scores and unlock ridiculous titles.</p></div>
+
+<section class="xpbar">
+  <div class="xp-top"><strong>CHAOS LEVEL <span id="level">1</span></strong><strong><span id="xp">0</span> / <span id="next">100</span> XP</strong></div>
+  <div class="xp-track"><div id="xpFill"></div></div>
+  <div class="xp-bottom"><span id="rank">NOVICE CHAOS</span><button class="resetxp" id="resetXP" type="button">RESET XP</button></div>
+</section>
+
+<section class="unlock-panel">
+  <div class="unlock-head"><div><span class="tag">PROGRESSION</span><h2>CHAOS UNLOCKS</h2></div><div class="difficulty"><span>DIFFICULTY</span><button class="diff active" data-diff="easy" type="button">EASY</button><button class="diff" data-diff="hard" type="button">HARD</button><button class="diff" data-diff="insane" type="button">INSANE</button></div></div>
+  <div class="unlock-grid" id="unlockGrid"></div>
+</section>
+
 <div class="gamegrid">
-<section id="wall" class="gamecard"><h2>🧱 BUILD THE WALL</h2><div class="gamearea"><div class="wallarea"><div id="wall" class="wall"></div></div><div class="score" id="wallmsg">Bricks: 0</div><div class="controls"><button class="btn" id="build">ADD BRICK</button><button class="btn white" id="wallReset">RESET</button></div><div class="result" id="wallResult"></div></div></section>
-<section id="hair" class="gamecard"><h2>💇 SAVE THE HAIR</h2><div class="gamearea"><div class="hairbox"><div class="wind">〰️〰️〰️</div><div class="char"><img src="assets/trump.png" alt=""></div></div><div class="meter"><div class="fill" id="hairFill"></div></div><div class="score">Hair stability: <span id="hairScore">100%</span></div><div class="controls"><button class="btn" id="protect">PROTECT HAIR</button><button class="btn white" id="hairReset">RESET</button></div><div class="result" id="hairResult"></div></div></section>
-<section id="feed" class="gamecard"><h2>🍔 FEED TRUMP</h2><div class="gamearea"><div class="foodbox" id="foodbox"><div class="mouth">🧑‍🦱</div></div><div class="score">Score: <span id="foodScore">0</span> · Misses: <span id="misses">0</span></div><div class="mini">Catch food before it falls. Broccoli steals points.</div><div class="controls" style="margin-top:10px"><button class="btn" id="foodStart">START FOOD DROP</button><button class="btn white" id="foodReset">RESET</button></div><div class="result" id="foodResult"></div></div></section>
-<section id="speech" class="gamecard"><h2>🎤 SPEECH MACHINE</h2><div class="gamearea"><div class="speech" id="speechText">Press the button for a completely fictional parody speech.</div><div class="controls" style="margin-top:14px"><button class="btn" id="speechBtn">MAKE A SPEECH</button><button class="btn white" id="copyBtn">COPY</button></div><div class="result" id="copyResult"></div></div></section>
-</div></main><footer class="footer"><div class="container">Unofficial parody/entertainment experience. Not a campaign website.</div></footer>
-<script src="app.js"></script><script>
-/* WALL */
-let bricks=0;const wall=$("#wall"),wallmsg=$("#wallmsg"),wallResult=$("#wallResult");
-function renderWall(){wall.innerHTML="";for(let i=0;i<bricks;i++){const b=document.createElement("i");b.className="brick";wall.appendChild(b)}wallmsg.textContent="Bricks: "+bricks;if(bricks===25)wallResult.textContent="THE WALL IS GETTING SERIOUSLY SILLY 😂";if(bricks===50)wallResult.textContent="THE WALL HAS BECOME THE WEBSITE. 💀";if(bricks>50)wallResult.textContent="STOP. THERE IS NOWHERE LEFT TO BUILD. 🧱"}
-$("#build").onclick=()=>{bricks++;renderWall()};$("#wallReset").onclick=()=>{bricks=0;wallResult.textContent="";renderWall()};renderWall();
 
-/* HAIR */
-let hair=100,hairTimer=null;
-function hairRender(){hair=Math.max(0,Math.min(100,hair));$("#hairFill").style.width=hair+"%";$("#hairScore").textContent=hair+"%";$("#hairResult").textContent=hair===0?"HAIR HAS LEFT THE BUILDING. 💀":hair<25?"EMERGENCY HAIR MODE! 🚨":""}
-function runWind(){clearInterval(hairTimer);hairTimer=setInterval(()=>{hair-=Math.floor(Math.random()*7)+3;hairRender();if(hair<=0)clearInterval(hairTimer)},700)}
-$("#protect").onclick=()=>{hair=Math.min(100,hair+14);hairRender();runWind()};$("#hairReset").onclick=()=>{clearInterval(hairTimer);hair=100;hairRender();runWind()};hairRender();runWind();
+<section id="wall" class="gamecard"><h2>🧱 WALL RUSH <small>+XP</small></h2><div class="gamearea">
+<div class="gamehud"><span>SCORE <b id="wallScore">0</b></span><span>TIME <b id="wallTime">20</b></span></div>
+<div class="wallgame" id="wallGame"><div class="sky">☁️</div><div class="ground"></div><div class="runner"><img src="assets/trump.png" alt=""></div><div class="wallstack" id="wallStack"></div><div class="bomb" id="bomb">💣</div><div class="walltip">TAP / SPACE = BUILD</div></div>
+<div class="result" id="wallResult">Build as many bricks as possible before time runs out. Random bombs destroy bricks!</div>
+<div class="controls"><button class="btn" id="wallStart">START RUN</button><button class="btn white" id="wallJump">BUILD</button></div>
+</div></section>
 
-/* FOOD */
-let foodScore=0,misses=0,foodTimer=null;const foods=[["🍔",10],["🍕",8],["🍟",5],["🥦",-20]];
-function dropFood(){const el=document.createElement("span");el.className="food";const item=foods[Math.floor(Math.random()*foods.length)];el.textContent=item[0];el.dataset.v=item[1];el.style.left=(5+Math.random()*88)+"%";el.style.top="-42px";$("#foodbox").appendChild(el);let y=-42;const fall=setInterval(()=>{y+=5;el.style.top=y+"px";if(y>225){clearInterval(fall);if(el.isConnected){misses++;$("#misses").textContent=misses;el.remove()}}},45);el.onclick=()=>{clearInterval(fall);let v=Number(el.dataset.v);foodScore=Math.max(0,foodScore+v);$("#foodScore").textContent=foodScore;$("#foodResult").textContent=v<0?"BROCCOLI?! WHY 😭":"NICE CATCH! 🍔";el.remove()}}
-$("#foodStart").onclick=()=>{clearInterval(foodTimer);foodTimer=setInterval(dropFood,650);$("#foodResult").textContent="FOOD DROP STARTED!";};$("#foodReset").onclick=()=>{clearInterval(foodTimer);foodScore=0;misses=0;$("#foodScore").textContent=0;$("#misses").textContent=0;$("#foodResult").textContent="";$$(".food",$("#foodbox")).forEach(x=>x.remove())};
+<section id="hair" class="gamecard"><h2>💇 HAIR STORM <small>+XP</small></h2><div class="gamearea">
+<div class="gamehud"><span>HAIR <b id="hairPct">100</b>%</span><span>COMBO <b id="hairCombo">0</b></span></div>
+<div class="hairgame" id="hairGame"><div class="storm storm1">〰️〰️〰️</div><div class="storm storm2">💨💨</div><div class="lightning">⚡</div><div class="char hairchar"><img src="assets/trump.png" alt=""></div><div id="hairParticles"></div><div class="hairtip">TAP TRUMP'S HAIR TO PROTECT IT!</div></div>
+<div class="meter"><div class="fill" id="hairFill"></div></div>
+<div class="result" id="hairResult">Every successful tap repairs the hair. Survive the storm for XP.</div>
+<div class="controls"><button class="btn" id="hairStart">START STORM</button><button class="btn white" id="hairProtect">PROTECT HAIR</button></div>
+</div></section>
 
-/* SPEECH */
-const starts=["I have the BEST","Nobody has ever seen a","We are going to make a","People are saying this is the","Believe me, this is the"];const nouns=["burger","wall","haircut","golden toilet","sandwich","penguin","Wi‑Fi signal","tiny limousine"];const ends=["in the history of Tuesday.","and everybody is very impressed.","that is absolutely enormous.","and it has tremendous energy.","according to absolutely nobody. 😂"];let speech="";
-$("#speechBtn").onclick=()=>{speech=starts[Math.floor(Math.random()*starts.length)]+" "+nouns[Math.floor(Math.random()*nouns.length)]+" "+ends[Math.floor(Math.random()*ends.length)];$("#speechText").textContent="“"+speech+"”";$("#copyResult").textContent=""};
-$("#copyBtn").onclick=async()=>{if(!speech){$("#copyResult").textContent="Generate a speech first.";return}try{await navigator.clipboard.writeText(speech);$("#copyResult").textContent="Copied! 📋"}catch(e){$("#copyResult").textContent="Copy is unavailable in this browser."}};
+<section id="feed" class="gamecard"><h2>🍔 BURGER PANIC <small>+XP</small></h2><div class="gamearea">
+<div class="gamehud"><span>SCORE <b id="foodScore">0</b></span><span>LIVES <b id="foodLives">3</b></span></div>
+<div class="foodgame" id="foodGame"><div class="foodplayer" id="foodPlayer"><img src="assets/trump.png" alt=""></div><div class="foodtip">DRAG / TAP LEFT-RIGHT TO MOVE</div></div>
+<div class="result" id="foodResult">Catch burgers, pizza and fries. Avoid broccoli and bombs.</div>
+<div class="controls"><button class="btn" id="foodStart">START PANIC</button><button class="btn white" id="foodLeft">◀</button><button class="btn white" id="foodRight">▶</button></div>
+</div></section>
+
+<section id="speech" class="gamecard"><h2>🎤 CHAOS SPEECH <small>+XP</small></h2><div class="gamearea">
+<div class="gamehud"><span>WORD COMBO <b id="speechScore">0</b></span><span>TIME <b id="speechTime">15</b></span></div>
+<div class="speechgame"><div class="speechchar"><img src="assets/trump.png" alt=""></div><div class="speechbubble" id="speechText">Choose the correct word before the timer ends!</div></div>
+<div class="choices" id="choices"></div>
+<div class="result" id="speechResult">Correct answers give XP. Wrong answers break the combo.</div>
+<div class="controls"><button class="btn" id="speechStart">START SPEECH</button></div>
+</div></section>
+
+</div>
+</main>
+<footer class="footer"><div class="container">TRUMP CHAOS is an unofficial parody/entertainment experience. It is not affiliated with Donald Trump, any campaign, or any political organization.</div></footer>
+
+<script src="app.js"></script>
+<script>
+/* XP + progression */
+let totalXP=Math.max(0,Number(loadLocal("trumpChaosXP","0"))||0);
+let difficulty=loadLocal("trumpChaosDifficulty","easy");
+let skin=loadLocal("trumpChaosSkin","classic");
+document.body.dataset.skin=skin;\nconst ranks=["NOVICE CHAOS","MEME ROOKIE","CHAOS MAKER","WALL BOSS","HAIR COMMANDER","CHAOS LEGEND","ULTRA TRUMPSTER"];
+const unlocks=[
+  {id:"gold",level:2,name:"GOLD TIE",icon:"👔",desc:"Golden tie aura"},
+  {id:"laser",level:3,name:"LASER EYES",icon:"😎",desc:"Red laser meme effect"},
+  {id:"burger",level:4,name:"BURGER KING",icon:"🍔",desc:"Burger particle skin"},
+  {id:"crown",level:6,name:"CHAOS CROWN",icon:"👑",desc:"Royal Trump skin"},
+  {id:"fire",level:8,name:"FIRE MODE",icon:"🔥",desc:"Animated fire aura"},
+  {id:"diamond",level:10,name:"DIAMOND CHAOS",icon:"💎",desc:"Rare final skin"}
+];
+function levelInfo(xp){let level=1,need=100;while(xp>=need){xp-=need;level++;need=Math.round(100*Math.pow(1.18,level-1))}return{level,cur:xp,need}}
+function unlocked(u){return levelInfo(totalXP).level>=u.level}
+function renderXP(){
+ const i=levelInfo(totalXP);$("#level").textContent=i.level;$("#xp").textContent=i.cur;$("#next").textContent=i.need;
+ $("#xpFill").style.width=Math.min(100,i.cur/i.need*100)+"%";
+ $("#rank").textContent=ranks[Math.min(ranks.length-1,Math.floor((i.level-1)/2))];
+ renderUnlocks();
+}
+function renderUnlocks(){
+ const box=$("#unlockGrid"); if(!box)return; box.innerHTML="";
+ unlocks.forEach(u=>{const ok=unlocked(u),el=document.createElement("button");el.type="button";el.className="unlock "+(ok?"unlocked":"locked")+" "+(skin===u.id?"selected":"");
+ el.innerHTML="<span class='unlock-icon'>"+u.icon+"</span><span><b>"+u.name+"</b><small>LVL "+u.level+" • "+u.desc+"</small></span>"+(ok?"":"🔒");
+ el.onclick=()=>{if(!ok){$("#wallResult").textContent="Reach LEVEL "+u.level+" to unlock "+u.name+".";return}skin=u.id;saveLocal("trumpChaosSkin",skin);document.body.dataset.skin=skin;renderUnlocks();$("#wallResult").textContent=u.name+" EQUIPPED!";};
+ box.appendChild(el)});
+}
+function addXP(n,label){n=Math.max(0,Math.round(n));totalXP+=n;saveLocal("trumpChaosXP",totalXP);renderXP();const pop=document.createElement("div");pop.className="xppop";pop.textContent="+"+n+" XP";document.body.appendChild(pop);setTimeout(()=>pop.remove(),900)}
+$("#resetXP").onclick=()=>{if(confirm("Reset all XP and unlocks?")){totalXP=0;skin="classic";saveLocal("trumpChaosXP",0);saveLocal("trumpChaosSkin","classic");renderXP()}};
+$$(".diff").forEach(b=>b.onclick=()=>{$$(".diff").forEach(x=>x.classList.remove("active"));b.classList.add("active");difficulty=b.dataset.diff;saveLocal("trumpChaosDifficulty",difficulty);$("#wallResult").textContent="Difficulty set to "+difficulty.toUpperCase()+".";});
+const currentDiff=$('.diff[data-diff="'+difficulty+'"]');if(currentDiff)currentDiff.classList.add("active");renderXP();
+
+/* WALL RUSH */
+let wallRunning=false,wallTimer=null,wallTime=20,wallScore=0,bombs=[];const wallGame=$("#wallGame");
+function wallBrick(){const b=document.createElement("span");b.className="livebrick";b.textContent="🧱";$("#wallStack").appendChild(b)}
+function wallEnd(){wallRunning=false;clearInterval(wallTimer);addXP(Math.floor(wallScore/2)+20);$("#wallResult").textContent="TIME! You built "+wallScore+" bricks. XP earned!";$("#wallStart").textContent="PLAY AGAIN"}
+function wallTick(){wallTime--;$("#wallTime").textContent=wallTime;if(wallTime<=0)wallEnd()}
+function build(){if(!wallRunning)return;wallScore++;wallBrick();$("#wallScore").textContent=wallScore;const flash=document.createElement("span");flash.className="spark";flash.textContent="+1";wallGame.appendChild(flash);setTimeout(()=>flash.remove(),500);if(Math.random()<.12){const b=document.createElement("div");b.className="fallbomb";b.textContent="💣";wallGame.appendChild(b);setTimeout(()=>{b.remove();const bs=$("#wallStack");if(bs.lastElementChild)bs.lastElementChild.remove()},650)}}
+$("#wallStart").onclick=()=>{clearInterval(wallTimer);$("#wallStack").innerHTML="";wallScore=0;wallTime=difficulty==="hard"?15:difficulty==="insane"?10:20;$("#wallScore").textContent=0;$("#wallTime").textContent=wallTime;wallRunning=true;$("#wallResult").textContent="GO!";$("#wallStart").textContent="RESTART";wallTimer=setInterval(wallTick,1000)};
+$("#wallJump").onclick=build;window.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();build()}});
+wallGame.addEventListener("click",e=>{if(e.target===wallGame||e.target.classList.contains("sky"))build()});
+
+/* HAIR STORM */
+let hairRun=false,hairTimer=null,hair=100,hairCombo=0,hairScore=0;
+function hairRender(){$("#hairPct").textContent=Math.max(0,Math.round(hair));$("#hairFill").style.width=Math.max(0,hair)+"%";$("#hairCombo").textContent=hairCombo}
+function protect(){if(!hairRun)return;hair=Math.min(100,hair+9);hairCombo++;hairScore++;hairRender();const p=document.createElement("span");p.className="heart";p.textContent="✨";p.style.left=(35+Math.random()*30)+"%";p.style.top=(20+Math.random()*35)+"%";$("#hairParticles").appendChild(p);setTimeout(()=>p.remove(),650)}
+function hairEnd(){hairRun=false;clearInterval(hairTimer);let earned=Math.max(20,hairScore*3+hairCombo*2);addXP(earned);$("#hairResult").textContent=hair<=0?"THE HAIR HAS LEFT THE BUILDING! 💀 +"+earned+" XP":"STORM SURVIVED! +"+earned+" XP"}
+$("#hairStart").onclick=()=>{clearInterval(hairTimer);hairRun=true;hair=100;hairCombo=0;hairScore=0;hairRender();$("#hairResult").textContent="STORM INCOMING!";hairTimer=setInterval(()=>{hair-= (Math.random()*8+3) * (difficulty==="hard"?1.25:difficulty==="insane"?1.65:1);if(Math.random()<.16)hair-=10;hairRender();if(hair<=0)hairEnd()},500)}
+$("#hairProtect").onclick=protect;$("#hairGame").addEventListener("click",e=>{if(hairRun && (e.target.closest(".hairchar")||e.target===hairGame))protect()});
+hairRender();
+
+/* BURGER PANIC */
+let foodRun=false,foodTimer=null,spawnTimer=null,foodScore=0,lives=3,px=50,keys={};
+const foodItems=[["🍔",10],["🍕",8],["🍟",6],["🥦",-10],["💣",-999]];
+function foodMove(dir){px=Math.max(12,Math.min(88,px+dir*6));$("#foodPlayer").style.left=px+"%"}
+function spawnFood(){if(!foodRun)return;const el=document.createElement("span");el.className="dropfood";const it=foodItems[Math.floor(Math.random()*foodItems.length)];el.textContent=it[0];el.dataset.v=it[1];el.style.left=(5+Math.random()*90)+"%";el.style.top="-45px";$("#foodGame").appendChild(el);let y=-45;const fall=setInterval(()=>{y+=6+foodScore*.015;el.style.top=y+"px";const er=el.getBoundingClientRect(),pr=$("#foodPlayer").getBoundingClientRect();if(er.bottom>=pr.top&&er.top<=pr.bottom&&er.left<pr.right&&er.right>pr.left){clearInterval(fall);let v=Number(el.dataset.v);if(v<0){lives--;$("#foodLives").textContent=lives;$("#foodResult").textContent=v===-999?"💣 BOOM!":"BROCCOLI! 😭";el.classList.add("hitbad");if(lives<=0)foodEnd()}else{foodScore+=v;$("#foodScore").textContent=foodScore;$("#foodResult").textContent="NICE! +"+v+" points";addXP(1)}el.remove()}else if(y>245){clearInterval(fall);el.remove()}},35)}
+function foodEnd(){foodRun=false;clearInterval(spawnTimer);clearInterval(foodTimer);const earned=Math.max(15,Math.floor(foodScore/2));addXP(earned);$("#foodResult").textContent="PANIC OVER! Score "+foodScore+" → +"+earned+" XP";$("#foodStart").textContent="PLAY AGAIN"}
+$("#foodStart").onclick=()=>{clearInterval(spawnTimer);foodRun=true;foodScore=0;lives=3;px=50;$("#foodScore").textContent=0;$("#foodLives").textContent=3;$("#foodPlayer").style.left="50%";$("#foodResult").textContent="CATCH EVERYTHING!";spawnTimer=setInterval(spawnFood,difficulty==="hard"?480:difficulty==="insane"?360:620);foodTimer=setInterval(()=>{if(lives<=0)foodEnd()},500)};
+$("#foodLeft").onclick=()=>foodMove(-1);$("#foodRight").onclick=()=>foodMove(1);
+$("#foodGame").addEventListener("pointerdown",e=>{if(!foodRun)return;foodMove(e.clientX<window.innerWidth/2?-1:1)});
+window.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")foodMove(-1);if(e.key==="ArrowRight")foodMove(1)});
+
+/* SPEECH QUIZ */
+let speechRun=false,speechTimer=null,speechTime=15,speechScore=0,answer="";
+const sets=[
+["I have the BEST ___","burger",["burger","broccoli","umbrella","toothbrush"]],
+["Nobody has ever seen a ___ like this","wall",["wall","spoon","pencil","sock"]],
+["We need a very ___ hair","big",["big","tiny","square","invisible"]],
+["This is absolutely ___","tremendous",["tremendous","sleepy","purple","microscopic"]],
+["Make the ___ bigger","chaos",["chaos","pillow","banana","raincoat"]]
+];
+function nextQuestion(){const q=sets[Math.floor(Math.random()*sets.length)];answer=q[1];$("#speechText").textContent=q[0];const box=$("#choices");box.innerHTML="";q[2].sort(()=>Math.random()-.5).forEach(v=>{const b=document.createElement("button");b.className="choice";b.textContent=v;b.onclick=()=>{if(!speechRun)return;if(v===answer){speechScore++;addXP(2);$("#speechResult").textContent="CORRECT! 🔥";}else{$("#speechResult").textContent="NOPE! Combo broken 😂";speechScore=Math.max(0,speechScore-1)}$("#speechScore").textContent=speechScore;nextQuestion()}});$("#speechScore").textContent=speechScore}
+function speechEnd(){speechRun=false;clearInterval(speechTimer);const earned=20+speechScore*4;addXP(earned);$("#speechResult").textContent="SPEECH OVER! "+speechScore+" correct → +"+earned+" XP";$("#speechStart").textContent="PLAY AGAIN";$("#choices").innerHTML=""}
+$("#speechStart").onclick=()=>{clearInterval(speechTimer);speechRun=true;speechTime=difficulty==="hard"?12:difficulty==="insane"?9:15;speechScore=0;$("#speechTime").textContent=15;$("#speechResult").textContent="PICK THE ABSURD WORD!";$("#speechStart").textContent="RUNNING...";nextQuestion();speechTimer=setInterval(()=>{speechTime--;$("#speechTime").textContent=speechTime;if(speechTime<=0)speechEnd()},1000)};
 </script></body></html>
