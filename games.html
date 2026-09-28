@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Games — Trump Chaos</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="nav"><div class="container navin"><a class="brand" href="index.html">TRUMP <b>CHAOS</b></a><button class="menu" type="button">MENU</button><div class="links"><a href="index.html">HOME</a><a class="active" href="games.html">GAMES</a><a href="meme.html">MEME LAB</a><a href="about.html">ABOUT</a></div></div></nav>
+<main class="container gamewrap"><div class="gamehead"><h1>PLAY THE <span style="color:var(--gold)">CHAOS</span></h1><p>Four tiny games. Infinite nonsense. Tap-friendly on mobile.</p></div>
+<div class="gamegrid">
+<section id="wall" class="gamecard"><h2>🧱 BUILD THE WALL</h2><div class="gamearea"><div class="wallarea"><div id="wall" class="wall"></div></div><div class="score" id="wallmsg">Bricks: 0</div><div class="controls"><button class="btn" id="build">ADD BRICK</button><button class="btn white" id="wallReset">RESET</button></div><div class="result" id="wallResult"></div></div></section>
+<section id="hair" class="gamecard"><h2>💇 SAVE THE HAIR</h2><div class="gamearea"><div class="hairbox"><div class="wind">〰️〰️〰️</div><div class="char"><img src="assets/trump.png" alt=""></div></div><div class="meter"><div class="fill" id="hairFill"></div></div><div class="score">Hair stability: <span id="hairScore">100%</span></div><div class="controls"><button class="btn" id="protect">PROTECT HAIR</button><button class="btn white" id="hairReset">RESET</button></div><div class="result" id="hairResult"></div></div></section>
+<section id="feed" class="gamecard"><h2>🍔 FEED TRUMP</h2><div class="gamearea"><div class="foodbox" id="foodbox"><div class="mouth">🧑‍🦱</div></div><div class="score">Score: <span id="foodScore">0</span> · Misses: <span id="misses">0</span></div><div class="mini">Catch food before it falls. Broccoli steals points.</div><div class="controls" style="margin-top:10px"><button class="btn" id="foodStart">START FOOD DROP</button><button class="btn white" id="foodReset">RESET</button></div><div class="result" id="foodResult"></div></div></section>
+<section id="speech" class="gamecard"><h2>🎤 SPEECH MACHINE</h2><div class="gamearea"><div class="speech" id="speechText">Press the button for a completely fictional parody speech.</div><div class="controls" style="margin-top:14px"><button class="btn" id="speechBtn">MAKE A SPEECH</button><button class="btn white" id="copyBtn">COPY</button></div><div class="result" id="copyResult"></div></div></section>
+</div></main><footer class="footer"><div class="container">Unofficial parody/entertainment experience. Not a campaign website.</div></footer>
+<script src="app.js"></script><script>
+/* WALL */
+let bricks=0;const wall=$("#wall"),wallmsg=$("#wallmsg"),wallResult=$("#wallResult");
+function renderWall(){wall.innerHTML="";for(let i=0;i<bricks;i++){const b=document.createElement("i");b.className="brick";wall.appendChild(b)}wallmsg.textContent="Bricks: "+bricks;if(bricks===25)wallResult.textContent="THE WALL IS GETTING SERIOUSLY SILLY 😂";if(bricks===50)wallResult.textContent="THE WALL HAS BECOME THE WEBSITE. 💀";if(bricks>50)wallResult.textContent="STOP. THERE IS NOWHERE LEFT TO BUILD. 🧱"}
+$("#build").onclick=()=>{bricks++;renderWall()};$("#wallReset").onclick=()=>{bricks=0;wallResult.textContent="";renderWall()};renderWall();
+
+/* HAIR */
+let hair=100,hairTimer=null;
+function hairRender(){hair=Math.max(0,Math.min(100,hair));$("#hairFill").style.width=hair+"%";$("#hairScore").textContent=hair+"%";$("#hairResult").textContent=hair===0?"HAIR HAS LEFT THE BUILDING. 💀":hair<25?"EMERGENCY HAIR MODE! 🚨":""}
+function runWind(){clearInterval(hairTimer);hairTimer=setInterval(()=>{hair-=Math.floor(Math.random()*7)+3;hairRender();if(hair<=0)clearInterval(hairTimer)},700)}
+$("#protect").onclick=()=>{hair=Math.min(100,hair+14);hairRender();runWind()};$("#hairReset").onclick=()=>{clearInterval(hairTimer);hair=100;hairRender();runWind()};hairRender();runWind();
+
+/* FOOD */
+let foodScore=0,misses=0,foodTimer=null;const foods=[["🍔",10],["🍕",8],["🍟",5],["🥦",-20]];
+function dropFood(){const el=document.createElement("span");el.className="food";const item=foods[Math.floor(Math.random()*foods.length)];el.textContent=item[0];el.dataset.v=item[1];el.style.left=(5+Math.random()*88)+"%";el.style.top="-42px";$("#foodbox").appendChild(el);let y=-42;const fall=setInterval(()=>{y+=5;el.style.top=y+"px";if(y>225){clearInterval(fall);if(el.isConnected){misses++;$("#misses").textContent=misses;el.remove()}}},45);el.onclick=()=>{clearInterval(fall);let v=Number(el.dataset.v);foodScore=Math.max(0,foodScore+v);$("#foodScore").textContent=foodScore;$("#foodResult").textContent=v<0?"BROCCOLI?! WHY 😭":"NICE CATCH! 🍔";el.remove()}}
+$("#foodStart").onclick=()=>{clearInterval(foodTimer);foodTimer=setInterval(dropFood,650);$("#foodResult").textContent="FOOD DROP STARTED!";};$("#foodReset").onclick=()=>{clearInterval(foodTimer);foodScore=0;misses=0;$("#foodScore").textContent=0;$("#misses").textContent=0;$("#foodResult").textContent="";$$(".food",$("#foodbox")).forEach(x=>x.remove())};
+
+/* SPEECH */
+const starts=["I have the BEST","Nobody has ever seen a","We are going to make a","People are saying this is the","Believe me, this is the"];const nouns=["burger","wall","haircut","golden toilet","sandwich","penguin","Wi‑Fi signal","tiny limousine"];const ends=["in the history of Tuesday.","and everybody is very impressed.","that is absolutely enormous.","and it has tremendous energy.","according to absolutely nobody. 😂"];let speech="";
+$("#speechBtn").onclick=()=>{speech=starts[Math.floor(Math.random()*starts.length)]+" "+nouns[Math.floor(Math.random()*nouns.length)]+" "+ends[Math.floor(Math.random()*ends.length)];$("#speechText").textContent="“"+speech+"”";$("#copyResult").textContent=""};
+$("#copyBtn").onclick=async()=>{if(!speech){$("#copyResult").textContent="Generate a speech first.";return}try{await navigator.clipboard.writeText(speech);$("#copyResult").textContent="Copied! 📋"}catch(e){$("#copyResult").textContent="Copy is unavailable in this browser."}};
+</script></body></html>
